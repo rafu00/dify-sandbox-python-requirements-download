@@ -1,4 +1,4 @@
-# dify sandbox install packages offline
+# dify-sandbox install packages offline
 
 ## Step 1
 edit `path_to/dify/docker/docker-compose.yaml`
