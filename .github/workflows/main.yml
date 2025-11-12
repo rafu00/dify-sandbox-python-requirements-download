@@ -1,0 +1,35 @@
+ymlname: python_requirements_download
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: "langgenius/dify-sandbox:0.2.12"
+        required: true
+        default: "langgenius/dify-sandbox:0.2.12"
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: pull image
+        run: |
+          docker pull ${{ inputs.image }}
+
+      - name: create whls directory
+        run: mkdir -p ${{ github.workspace }}/whls
+
+      - name: run container
+        run: |
+          docker run --rm -v ${{ github.workspace }}/whls:/whls -v ${{ github.workspace }}/python-requirements.txt:/data/python-requirements.txt ${{ inputs.image }} pip3 download -r /data/python-requirements.txt -d /whls
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+
+        with:
+          name: whls
+          path: ${{ github.workspace }}/whls
