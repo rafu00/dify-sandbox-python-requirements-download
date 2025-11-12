@@ -57,10 +57,9 @@ proxy:
 ```
 
 ## Step 5
+recreate dify-sandbox container
 ```
 cp path_to/dify/docker
 docker compose down
 docker compose up -d
 ```
-
-
