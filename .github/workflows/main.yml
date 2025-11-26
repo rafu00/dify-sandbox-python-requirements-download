@@ -21,15 +21,15 @@ jobs:
           docker pull ${{ inputs.image }}
 
       - name: create whls directory
-        run: mkdir -p ${{ github.workspace }}/whls
+        run: mkdir -p ${{ github.workspace }}/artifact_root/whls
 
       - name: run container
         run: |
-          docker run --rm --entrypoint "" -v ${{ github.workspace }}/whls:/whls -v ${{ github.workspace }}/python-requirements.txt:/data/python-requirements.txt ${{ inputs.image }} pip3 download -r /data/python-requirements.txt -d /whls
+          docker run --rm --entrypoint "" -v ${{ github.workspace }}/artifact_root/whls:/whls -v ${{ github.workspace }}/python-requirements.txt:/data/python-requirements.txt ${{ inputs.image }} pip3 download -r /data/python-requirements.txt -d /whls
 
       - name: upload artifact
         uses: actions/upload-artifact@v4
 
         with:
           name: whls
-          path: ${{ github.workspace }}/whls
+          path: ${{ github.workspace }}/artifact_root
