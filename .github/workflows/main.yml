@@ -23,13 +23,21 @@ jobs:
       - name: create whls directory
         run: mkdir -p ${{ github.workspace }}/artifact_root/whls
 
-      - name: run container
+      - name: download python packages with system dependencies
         run: |
-          docker run --rm --entrypoint "" -v ${{ github.workspace }}/artifact_root/whls:/whls -v ${{ github.workspace }}/python-requirements.txt:/data/python-requirements.txt ${{ inputs.image }} pip3 download -r /data/python-requirements.txt -d /whls
+          docker run --rm \
+            --entrypoint="" \
+            -v ${{ github.workspace }}/artifact_root/whls:/whls \
+            -v ${{ github.workspace }}/python-requirements.txt:/data/python-requirements.txt \
+            ${{ inputs.image }} \
+            sh -c "
+              apt-get update && \
+              apt-get install -y libmysqlclient-dev pkg-config && \
+              pip3 download -r /data/python-requirements.txt -d /whls
+            "
 
       - name: upload artifact
         uses: actions/upload-artifact@v4
-
         with:
           name: whls
           path: ${{ github.workspace }}/artifact_root
