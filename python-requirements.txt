@@ -1,1 +1,3 @@
-pandas
+PyMySQL
+mysql-connector-python
+mysql
