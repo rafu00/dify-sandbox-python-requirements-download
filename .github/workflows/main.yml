@@ -32,7 +32,7 @@ jobs:
             ${{ inputs.image }} \
             sh -c "
               apt-get update && \
-              apt-get install -y libmysqlclient-dev pkg-config && \
+              apt-get install -y libmariadb-dev pkg-config && \
               pip3 download -r /data/python-requirements.txt -d /whls
             "
 
