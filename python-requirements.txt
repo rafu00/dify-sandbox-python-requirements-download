@@ -1,2 +1,3 @@
-pandas
-python-docx
+PyMySQL
+mysql-connector-python
+mysql
